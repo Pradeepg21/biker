@@ -1,0 +1,123 @@
+rules_version = '2';
+
+// BikersThrill security rules.
+// Riders can only use groups, rides, locations and SOS after an admin sets status to APPROVED.
+// Admins are users whose document has role == "admin". Any admin can grant or remove admin access.
+// The super admin (fixed email below) is always an admin and can't be changed by anyone else.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function uid() { return request.auth.uid; }
+    function userDoc() { return get(/databases/$(database)/documents/users/$(uid())); }
+    function hasUserDoc() { return exists(/databases/$(database)/documents/users/$(uid())); }
+    function superAdminEmail() { return 'deep.pkg@gmail.com'; }
+    function isSuperAdmin() {
+      return signedIn() && request.auth.token.email != null
+        && request.auth.token.email.lower() == superAdminEmail();
+    }
+    function isAdmin() {
+      return isSuperAdmin() || (signedIn() && hasUserDoc() && userDoc().data.get('role', 'rider') == 'admin');
+    }
+    function approved() { return signedIn() && hasUserDoc() && userDoc().data.get('status', '') == 'APPROVED'; }
+
+    // ---------------------------------------------------------------- users
+    match /users/{userId} {
+      allow read: if signedIn() && (uid() == userId || isAdmin());
+
+      allow create: if signedIn() && uid() == userId && (
+        isSuperAdmin() || (
+          request.resource.data.get('role', 'rider') == 'rider'
+          && request.resource.data.get('status', 'INCOMPLETE') == 'INCOMPLETE'
+        )
+      );
+
+      // Riders edit their own profile but can never change role, approve themselves
+      // or touch review fields. Identity fields are locked once approved.
+      // Super admin: anything. Other admins: review riders and grant/remove admin,
+      // but never modify the super admin's account.
+      allow update: if isSuperAdmin() || (
+        isAdmin()
+        && resource.data.get('email', '').lower() != superAdminEmail()
+        && request.resource.data.get('email', '').lower() != superAdminEmail()
+      ) || (
+        signedIn() && uid() == userId
+        && request.resource.data.get('role', 'rider') == resource.data.get('role', 'rider')
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['reviewedAt', 'reviewedBy', 'uid', 'email'])
+        && (
+          request.resource.data.get('status', 'INCOMPLETE') == resource.data.get('status', 'INCOMPLETE')
+          || (resource.data.get('status', 'INCOMPLETE') in ['INCOMPLETE', 'REJECTED']
+              && request.resource.data.status == 'PENDING')
+        )
+        && (
+          resource.data.get('status', '') != 'APPROVED'
+          || !request.resource.data.diff(resource.data).affectedKeys().hasAny(
+               ['fullName', 'dateOfBirth', 'idType', 'idNumber', 'licenseNumber', 'licenseExpiry', 'rejectionReason'])
+        )
+      );
+
+      // Riders can delete their own account (in-app "Delete account").
+      allow delete: if isSuperAdmin() || (signedIn() && uid() == userId && !isSuperAdmin());
+    }
+
+    // ---------------------------------------------------------------- KYC images
+    match /kyc/{userId} {
+      allow read: if signedIn() && (uid() == userId || isAdmin());
+      allow write: if isAdmin() || (
+        signedIn() && uid() == userId && hasUserDoc()
+        && userDoc().data.get('status', 'INCOMPLETE') in ['INCOMPLETE', 'REJECTED']
+      ) || (signedIn() && uid() == userId && !hasUserDoc());
+      allow delete: if signedIn() && uid() == userId;
+    }
+
+    // ---------------------------------------------------------------- groups
+    match /groups/{groupId} {
+      function isMember() { return uid() in resource.data.memberIds; }
+
+      allow read: if approved() || isAdmin();
+      allow create: if approved()
+        && request.resource.data.ownerId == uid()
+        && request.resource.data.memberIds == [uid()];
+      // Members may update; a non-member may only add themselves (join by code).
+      allow update: if approved()
+        && request.resource.data.ownerId == resource.data.ownerId
+        && request.resource.data.code == resource.data.code
+        && (isMember() || (
+              request.resource.data.memberIds.toSet().difference(resource.data.memberIds.toSet()) == [uid()].toSet()
+              && resource.data.memberIds.toSet().difference(request.resource.data.memberIds.toSet()).size() == 0
+           ));
+      allow delete: if isAdmin() || (approved() && resource.data.ownerId == uid());
+
+      match /messages/{messageId} {
+        function groupMember() {
+          return uid() in get(/databases/$(database)/documents/groups/$(groupId)).data.memberIds;
+        }
+        allow read: if isAdmin() || (approved() && groupMember());
+        allow create: if approved() && groupMember() && request.resource.data.senderId == uid();
+        allow update, delete: if isAdmin();
+      }
+    }
+
+    // ---------------------------------------------------------------- live locations
+    match /locations/{userId} {
+      allow read: if approved() || isAdmin();
+      allow write: if signedIn() && uid() == userId;
+    }
+
+    // ---------------------------------------------------------------- SOS
+    match /sos/{alertId} {
+      allow read: if approved() || isAdmin();
+      allow create: if approved() && request.resource.data.uid == uid();
+      allow update: if isAdmin() || (approved() && resource.data.uid == uid());
+      allow delete: if isAdmin() || (signedIn() && resource.data.uid == uid());
+    }
+
+    // ---------------------------------------------------------------- shared rides
+    match /rides/{rideId} {
+      allow read: if approved() || isAdmin();
+      allow create: if approved() && request.resource.data.createdBy == uid();
+      allow update: if approved() && request.resource.data.createdBy == resource.data.createdBy;
+      allow delete: if isAdmin() || (approved() && resource.data.createdBy == uid());
+    }
+  }
+}

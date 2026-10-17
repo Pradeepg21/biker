@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "162850196137",
+    "project_id": "satya-digital-34053",
+    "storage_bucket": "satya-digital-34053.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162850196137:android:cf4036093f8082cc08f7b8",
+        "android_client_info": {
+          "package_name": "com.satya.biker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162850196137-7vphnmvfpgnvrcmblm7ick6lec64qstu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.satya.biker",
+            "certificate_hash": "fb12d17bfe521c9977986ad80a90a52052a9a065"
+          }
+        },
+        {
+          "client_id": "162850196137-ffdpsbt1f445ug9u4m647kogoqcn7mse.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.satya.biker",
+            "certificate_hash": "93081fb12f79d181ec6ed058f0616ee638d9adc9"
+          }
+        },
+        {
+          "client_id": "162850196137-kcag567mb268dl2soco67kcpr7tquqr5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.satya.biker",
+            "certificate_hash": "9483b548e5475a336ac942501e5376d4e2d146ce"
+          }
+        },
+        {
+          "client_id": "162850196137-ngnj9gp2mhqol1t0sq3s0le97fmnj2i7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrIWKdnfbxlrmaTXNS0XQ3iNpzWl9cCH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162850196137-ngnj9gp2mhqol1t0sq3s0le97fmnj2i7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,16 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": {
+    "public": "docs",
+    "cleanUrls": false,
+    "ignore": ["firebase.json", "**/.*"]
+  },
+  "emulators": {
+    "auth": { "port": 9099, "host": "0.0.0.0" },
+    "firestore": { "port": 8080, "host": "0.0.0.0" },
+    "ui": { "enabled": false },
+    "singleProjectMode": true
+  }
+}

@@ -1,0 +1,31 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Release signing secrets
+keystore.properties
+*.jks
+*.keystore
+
+# Firebase emulator logs
+*-debug.log
+store/src/demo_uids.json
+
+# Kotlin compiler caches
+.kotlin
+
+# Build outputs / caches
+/app/release
+__pycache__/
