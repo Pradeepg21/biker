@@ -202,6 +202,8 @@ the foreground-service (location) and full-screen-intent declarations — answer
   https://github.com/Pradeepg21/biker → `https://pradeepg21.github.io/biker/privacy.html` and
   `/delete-account.html` (these URLs are in the Play listing). Pushing to `main` updates them.
   Firebase Hosting can serve the same folder (`firebase deploy --only hosting`, ask first).
+- Foreground-service declaration video: `docs/video/bikersthrill-location-demo.mp4` (page
+  `docs/location-demo.html`), recorded on the emulator with demo data and cut/captioned with ffmpeg.
 - Re-shooting screenshots with demo data (never touches production):
   1. `firebase emulators:start --only auth,firestore` (needs Java 21: use Android Studio's `jbr`).
   2. `python -I store/src/seed_demo.py` (demo riders, groups, chat, rides, live locations;
@@ -223,7 +225,7 @@ the foreground-service (location) and full-screen-intent declarations — answer
 Add one line per change (newest first): `version — date — summary`.
 
 - 1.0.6 (7) — 2026-10-17 — SOS/emergency-contact wording matches the SMS-app flow.
-- 1.0.6 (7) — 2026-10-18 — Code pushed to GitHub (Pradeepg21/biker); website moved to `docs/` for GitHub Pages privacy policy; listing text tuned for search.
+- 1.0.6 (7) — 2026-10-18 — Code pushed to GitHub (Pradeepg21/biker); website moved to `docs/` for GitHub Pages privacy policy; listing text tuned for search; FGS location demo video on GitHub Pages.
 - 1.0.5 (6) — 2026-10-17 — Debug-only `FIREBASE_EMULATOR_HOST` build field (`-PemulatorHost`).
 - 1.0.4 (5) — 2026-10-17 — Play readiness: removed SEND_SMS (SOS opens SMS app), in-app Delete account (+ rules: owner can delete users/kyc/sos docs — not yet deployed), full-screen-intent permission prompt on Android 14+, new adaptive launcher icon, debug-only Firebase emulator switch; store/ listing, graphics & screenshots; hosting/ privacy policy & deletion page.
 

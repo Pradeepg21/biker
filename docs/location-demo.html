@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BikersThrill Location Demo</title><link rel="stylesheet" href="style.css"><link rel="icon" href="icon.png"></head>
+<body><main><header><img src="icon.png" alt=""><strong>BikersThrill</strong></header>
+<h1>Live location sharing during a ride</h1>
+<p class="muted">How BikersThrill uses the <code>FOREGROUND_SERVICE_LOCATION</code> permission. Recorded with sample riders.</p>
+<video controls playsinline preload="metadata" style="width:100%;max-width:360px;display:block;margin:16px auto;border-radius:12px;background:#000" src="video/bikersthrill-location-demo.mp4"></video>
+<ol>
+<li>The rider taps <b>Start ride</b>. The ride service starts and shares the rider's location with their own groups.</li>
+<li>Group members see the rider live on the group map.</li>
+<li>An ongoing notification is shown for the whole ride, with an <b>End ride</b> action.</li>
+<li>With the app in the background or the screen off, location sharing and crash detection keep running.</li>
+<li>The rider ends the ride from the notification or the app. The service stops and the notification is removed.</li>
+</ol>
+<p>Direct video link: <a href="video/bikersthrill-location-demo.mp4">bikersthrill-location-demo.mp4</a></p>
+</main></body></html>

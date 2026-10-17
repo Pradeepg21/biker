@@ -280,7 +280,7 @@ Purpose: **Analytics** only. Not Advertising or marketing.
 | Feature type | **Location sharing** / user-initiated location tracking |
 | Description | Live location sharing with the rider's own group and crash detection during a ride that the user starts. The service starts only when the user taps "Start ride", shows an ongoing notification with a Stop action, and ends when the ride stops. |
 | Impact if the task is deferred or interrupted | Group members lose the rider's live position, and a crash would go undetected while the phone is in a pocket or on a mount with the screen off. |
-| Video link | 30-second screen recording: Home → Start ride → notification visible → map updating → Stop ride. Upload it to YouTube as **Unlisted** and paste the link. |
+| Video link | https://pradeepg21.github.io/biker/video/bikersthrill-location-demo.mp4 (page with the steps: https://pradeepg21.github.io/biker/location-demo.html). Recorded with sample riders; re-record on a real phone and upload to YouTube as Unlisted if Play asks for a YouTube link. |
 
 ### 4.13 Full-screen intent
 - Is your app a calling or alarm app? → **No**. Choose **"Other"** and describe:
