@@ -255,7 +255,7 @@ Processed ephemerally: **No** for all.
 | Messages → Other in-app messages (group chat) | Optional | App functionality |
 | App activity → App interactions | Required | Analytics |
 | App activity → Other user-generated content (ride plans) | Optional | App functionality |
-| Device or other IDs → Device or other IDs (push token, Analytics/Advertising ID) | Required | App functionality, Analytics |
+| Device or other IDs → Device or other IDs (push token, Firebase app instance ID) | Required | App functionality, Analytics |
 
 Not collected: financial info, contacts list (emergency contacts are typed in, not read from the phone),
 calendar, files, audio, web history, installed apps, crash logs.
@@ -270,9 +270,9 @@ calendar, files, audio, web history, installed apps, crash logs.
 **My app does not have any health features.** The blood group is emergency information, not a health service.
 
 ### 4.11 Advertising ID
-**Yes, my app uses advertising ID.** Firebase Analytics adds the permission automatically.
-Purpose: **Analytics** only. Not Advertising or marketing.
-(Alternative: tell me and I'll remove the `AD_ID` permission from the app, then you answer "No".)
+**No, my app does not use advertising ID.** From 1.0.7 (8) the app removes the `AD_ID` permission
+that Firebase Analytics would add, and Analytics' ad-ID collection is switched off.
+(Uploading a bundle older than 1.0.7 still contains `AD_ID` and needs "Yes → Analytics".)
 
 ### 4.12 Foreground service permissions → **Location**
 | Field | Answer |

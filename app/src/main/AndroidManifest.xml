@@ -17,6 +17,11 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
 
+    <!-- No ads: strip the advertising-ID permissions Firebase Analytics merges in. -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" tools:node="remove" />
+
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.telephony" android:required="false" />
 
@@ -31,6 +36,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Biker"
         tools:targetApi="34">
+
+        <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
 
         <activity
             android:name=".MainActivity"

@@ -172,7 +172,10 @@ app/version.properties        auto-managed version (see §7)
 INTERNET, NETWORK_STATE, FINE/COARSE location, FOREGROUND_SERVICE(+_LOCATION), POST_NOTIFICATIONS,
 USE_FULL_SCREEN_INTENT, VIBRATE, WAKE_LOCK, HIGH_SAMPLING_RATE_SENSORS. Camera via
 `TakePicture` + FileProvider (`res/xml/file_paths.xml`: `captures/`, `exports/`).
-**No SEND_SMS** (restricted on Google Play; SOS texts go through the SMS app). Play Console needs
+**No SEND_SMS** (restricted on Google Play; SOS texts go through the SMS app).
+**No advertising ID**: the manifest strips `AD_ID`, `ACCESS_ADSERVICES_AD_ID` and
+`ACCESS_ADSERVICES_ATTRIBUTION` (merged in by Firebase Analytics, `tools:node="remove"`) and sets
+`google_analytics_adid_collection_enabled=false`; Play Console's Advertising ID answer is **No**. Play Console needs
 the foreground-service (location) and full-screen-intent declarations — answers in
 `store/PLAY_STORE_LISTING.md`.
 
@@ -225,6 +228,7 @@ the foreground-service (location) and full-screen-intent declarations — answer
 Add one line per change (newest first): `version — date — summary`.
 
 - 1.0.6 (7) — 2026-10-17 — SOS/emergency-contact wording matches the SMS-app flow.
+- 1.0.7 (8) — 2026-10-18 — Removed advertising-ID permissions (Play declaration: No); Analytics ad-ID collection off.
 - 1.0.6 (7) — 2026-10-18 — Code pushed to GitHub (Pradeepg21/biker); website moved to `docs/` for GitHub Pages privacy policy; listing text tuned for search; FGS location demo video on GitHub Pages.
 - 1.0.5 (6) — 2026-10-17 — Debug-only `FIREBASE_EMULATOR_HOST` build field (`-PemulatorHost`).
 - 1.0.4 (5) — 2026-10-17 — Play readiness: removed SEND_SMS (SOS opens SMS app), in-app Delete account (+ rules: owner can delete users/kyc/sos docs — not yet deployed), full-screen-intent permission prompt on Android 14+, new adaptive launcher icon, debug-only Firebase emulator switch; store/ listing, graphics & screenshots; hosting/ privacy policy & deletion page.
